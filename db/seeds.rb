@@ -1,13 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-# 'Baby Mine', 'Anne Walsh', 'Classic Lullabies From Around The World'
+require_relative 'library/helper.rb'
 
-albums = Album.create!([{title: 'Classic Lullabies From Around The World'}])
-artists = Artist.create!([{first_name: 'Anne', last_name:'Walsh'}])
-songs = Song.create!([{title: 'Baby Mine', album_id: 1}])
-albums = AlbumArtist.create!([{album_id: 1, artist_id:1}])
+generate_library_from_csv().each do | song |
+  album = Album.find_or_create_by!({title: song['album_title']})
+  album_song = album.songs.create!({title: song['song_title']})
+
+  song['song_artists'].each do | artist |
+    artist = Artist.find_or_create_by!( artist )
+    album_song.artists.push( artist )
+  end
+end
+
+# albums = Album.create!([{title: 'Classic Lullabies From Around The World'}])
+# artists = Artist.create!([{first_name: 'Anne', last_name:'Walsh'}])
+# songs = Song.create!([{title: 'Baby Mine', album_id: 1}])
+# albums = AlbumArtist.create!([{album_id: 1, artist_id:1}])
