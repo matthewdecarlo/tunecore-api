@@ -7,4 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # 'Baby Mine', 'Anne Walsh', 'Classic Lullabies From Around The World'
 
-songs = Song.create([{title: 'Baby Mine'}])
+albums = Album.create!([title: 'Classic Lullabies From Around The World'])
+songs = Song.create!([{title: 'Baby Mine', album_id: 1}])
